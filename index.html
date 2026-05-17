@@ -1,437 +1,738 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALIPZZY OVERLORD V11 | 100+ HYPER TOOLS</title>
+    <title>AlwaysMunnProduk</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#09090b',
+                            card: '#121217',
+                            primary: '#6366f1',
+                            secondary: '#a855f7',
+                            accent: '#22c55e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Share+Tech+Mono&display=swap');
-
-        :root {
-            --neon-primary: #00f3ff;
-            --dark-core: #020202;
-        }
-
         body {
-            font-family: 'Share Tech Mono', monospace;
-            background-color: var(--dark-core);
-            color: white;
-            overflow: hidden;
-            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #09090b;
+            color: #f4f4f5;
+            overflow-x: hidden;
         }
-
-        .orbitron { font-family: 'Orbitron', sans-serif; }
-
-        /* LOADING SCREEN STYLES */
-        #hacker-loader {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: black;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        #matrix-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        .terminal-box {
-            width: 100%;
-            max-width: 600px;
-            background: rgba(0, 20, 0, 0.8);
-            border: 1px solid #0f0;
-            padding: 15px;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
-            font-size: 12px;
-            color: #0f0;
-            height: 300px;
-            overflow: hidden;
+        /* Custom Glowing Card Effect */
+        .glow-card {
             position: relative;
+            background: rgba(18, 18, 23, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .scanline {
-            width: 100%;
-            height: 2px;
-            background: rgba(0, 255, 0, 0.1);
-            position: absolute;
-            top: 0;
-            left: 0;
-            animation: scan 4s linear infinite;
+        .glow-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.25);
         }
-
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
+        /* Custom Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .typing-text {
-            border-right: 2px solid #0f0;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 0.5s steps(30, end) infinite;
-        }
-
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        /* MAIN CONTENT STYLES */
-        .grid-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: -1;
-            perspective: 500px;
-        }
-
-        .glass-morphism {
-            background: rgba(5, 5, 5, 0.9);
-            border: 1px solid rgba(0, 243, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 1);
-        }
-
-        .tool-card {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .tool-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            background: rgba(0, 243, 255, 0.1);
-            border-color: var(--neon-primary);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-        }
-
-        .status-pulse {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0px rgba(0, 255, 0, 0.7); }
-            100% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
-        }
-
-        .scroll-custom::-webkit-scrollbar { width: 4px; }
-        .scroll-custom::-webkit-scrollbar-thumb { background: var(--neon-primary); }
-
-        .hidden-content {
+        /* Hidden scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
             display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body class="bg-black text-gray-300">
+<body class="selection:bg-indigo-500 selection:text-white">
 
-    <!-- HACKER ANIMATION LOADING (10 SECONDS) -->
-    <div id="hacker-loader">
-        <canvas id="matrix-canvas"></canvas>
-        <div class="text-center mb-6">
-            <h1 class="orbitron text-2xl font-black text-green-500 mb-2 italic tracking-tighter">ALIPZZY INITIALIZING...</h1>
-            <p class="text-[10px] text-green-800 tracking-[0.5em] uppercase">Bypassing Government Firewall</p>
-        </div>
-        
-        <div class="terminal-box shadow-lg">
-            <div class="scanline"></div>
-            <div id="terminal-content" class="font-mono space-y-1">
-                <!-- Scripted logs go here -->
-            </div>
-        </div>
-
-        <div class="mt-8 w-full max-w-[600px]">
-            <div class="flex justify-between text-[10px] text-green-500 mb-2 font-bold">
-                <span>SYSTEM EXPLOIT PROGRESS</span>
-                <span id="load-percent">0%</span>
-            </div>
-            <div class="w-full bg-green-950/30 h-2 rounded-full overflow-hidden border border-green-900">
-                <div id="main-progress" class="h-full bg-green-500 transition-all duration-300 shadow-[0_0_10px_#0f0]" style="width: 0%"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN DASHBOARD (HIDDEN AT START) -->
-    <div id="main-app" class="hidden-content">
-        <div class="grid-bg"></div>
-
-        <!-- TOP NAVIGATION BAR -->
-        <nav class="fixed top-0 w-full z-50 glass-morphism border-b border-cyan-900/50 p-4">
-            <div class="max-w-7xl mx-auto flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-cyan-500 p-2 rounded-sm text-black font-black">V11</div>
-                    <div>
-                        <h1 class="orbitron text-xl font-black text-cyan-400 tracking-tighter">ALIPZZY OVERLORD</h1>
-                        <p class="text-[8px] tracking-[0.4em] text-cyan-700">THE SUPREME 100+ MULTI-TOOL SYSTEM</p>
-                    </div>
+    <!-- Floating Header -->
+    <header class="sticky top-0 z-40 w-full border-b border-white/5 bg-brand-dark/80 backdrop-blur-md">
+        <div class="mx-auto flex max-w-7xl items-center justify-between p-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-secondary to-brand-primary text-white shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-fire text-lg"></i>
                 </div>
-                <div class="hidden md:flex space-x-6 text-[10px] font-bold uppercase tracking-widest">
-                    <span class="text-green-500"><span class="status-pulse bg-green-500"></span>SERVER: ONLINE</span>
-                    <span class="text-cyan-500">USER: GOD_ALIPZZY</span>
-                    <span class="text-red-500" id="clock">00:00:00</span>
+                <div>
+                    <span class="text-lg font-extrabold tracking-tight text-white">AlwaysMunn<span class="text-indigo-400">Produk</span></span>
                 </div>
             </div>
-        </nav>
+            <!-- Quick Link WhatsApp Channel -->
+            <a href="https://whatsapp.com/channel/0029VbCRUA7BVJl1zO1M4S1S" target="_blank" rel="noopener noreferrer" 
+               class="flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-2 text-xs font-semibold text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all duration-300">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
+                <span class="hidden sm:inline">Gabung Saluran WA AlwaysMunn</span>
+                <span class="sm:hidden">Saluran WA</span>
+            </a>
+        </div>
+    </header>
 
-        <div class="pt-24 pb-10 px-4 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Hero / Welcome Banner -->
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <section class="relative mb-16 overflow-hidden rounded-3xl bg-gradient-to-b from-indigo-950/20 to-zinc-900/50 p-8 md:p-16 border border-white/5">
+            <div class="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl"></div>
+            <div class="absolute -left-16 -bottom-16 h-64 w-64 rounded-full bg-purple-500/10 blur-3xl"></div>
             
-            <!-- LEFT PANEL: CATEGORIES -->
-            <aside class="lg:col-span-3 space-y-4">
-                <div class="glass-morphism p-4 rounded shadow-2xl">
-                    <h2 class="orbitron text-xs font-bold text-cyan-500 mb-4 flex items-center">
-                        <i class="fa-solid fa-list-check mr-2"></i> MASTER CATEGORIES
-                    </h2>
-                    <div class="space-y-1" id="category-list">
-                        <button onclick="filterTools('FF')" class="w-full text-left p-3 text-[11px] font-bold hover:bg-orange-900/20 border-l-2 border-transparent hover:border-orange-500 transition-all flex justify-between">
-                            <span>FREE FIRE EXPLOIT</span> <span class="text-gray-600">12</span>
-                        </button>
-                        <button onclick="filterTools('ML')" class="w-full text-left p-3 text-[11px] font-bold hover:bg-blue-900/20 border-l-2 border-transparent hover:border-blue-500 transition-all flex justify-between">
-                            <span>MLBB REAPER</span> <span class="text-gray-600">15</span>
-                        </button>
-                        <button onclick="filterTools('SOCIAL')" class="w-full text-left p-3 text-[11px] font-bold hover:bg-pink-900/20 border-l-2 border-transparent hover:border-pink-500 transition-all flex justify-between">
-                            <span>SOCIAL MEDIA DUMP</span> <span class="text-gray-600">20</span>
-                        </button>
-                        <button onclick="filterTools('DDOS')" class="w-full text-left p-3 text-[11px] font-bold hover:bg-red-900/20 border-l-2 border-transparent hover:border-red-500 transition-all flex justify-between">
-                            <span>SERVER CRASHER/DDOS</span> <span class="text-gray-600">10</span>
-                        </button>
-                        <button onclick="filterTools('VIP')" class="w-full text-left p-3 text-[11px] font-bold hover:bg-yellow-900/20 border-l-2 border-transparent hover:border-yellow-500 transition-all flex justify-between">
-                            <span>VIP PAID TOOLS (FREE)</span> <span class="text-gray-600">25+</span>
-                        </button>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- CENTER PANEL: TOOL GRID -->
-            <div class="lg:col-span-6 space-y-6">
-                <div class="glass-morphism p-4 rounded-lg flex space-x-4 items-center">
-                    <div class="flex-1 relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-cyan-800 text-xs"></i>
-                        <input type="text" id="tool-search" placeholder="Cari dari 100+ tools (contoh: 'Diamond', 'Instagram')..." class="w-full bg-black/50 border border-cyan-900/50 p-3 pl-12 text-xs rounded focus:outline-none focus:border-cyan-400 transition-all">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-[600px] overflow-y-auto scroll-custom pr-2" id="tools-container">
-                    <!-- Tools Generated by JS -->
+            <div class="relative z-10 max-w-3xl text-center mx-auto">
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-400 border border-indigo-500/20 mb-6">
+                    <span class="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+                    Premium Services & Script
+                </span>
+                <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-6xl mb-6">
+                    Solusi lebih cepat untuk melihat produk AlwaysMunn <br>
+                    <span class="gradient-text">Engagement Bisnis Anda</span>
+                </h1>
+                <p class="text-base text-zinc-400 leading-relaxed max-w-xl mx-auto mb-8">
+                    Menyediakan jasa push channel, akses owner js, hingga script bot Telegram/WhatsApp premium yang amanah, super stabil, & bergaransi.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#products-list" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-secondary to-brand-primary px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-indigo-500/20 hover:opacity-90 active:scale-95 transition-all duration-200">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        gasss belanja disini 100% amanah
+                    </a>
                 </div>
             </div>
+        </section>
 
-            <!-- RIGHT PANEL: TERMINAL -->
-            <aside class="lg:col-span-3 space-y-6">
-                <div class="glass-morphism h-[350px] flex flex-col rounded-lg overflow-hidden border-cyan-900/30">
-                    <div class="bg-cyan-950/50 px-4 py-2 border-b border-cyan-900 flex justify-between items-center">
-                        <span class="text-[9px] font-bold text-cyan-400 uppercase tracking-widest">Global Live Feed</span>
+        <!-- Whatsapp Channel Promotion -->
+        <section class="mb-16">
+            <div class="relative rounded-2xl bg-gradient-to-r from-emerald-950/20 to-zinc-900 border border-emerald-500/10 p-6 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden">
+                <div class="absolute right-0 top-0 translate-x-12 -translate-y-12 opacity-5 text-emerald-500 text-9xl font-bold">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
+                        <i class="fa-brands fa-whatsapp text-2xl animate-bounce"></i>
                     </div>
-                    <div id="live-feed" class="p-4 flex-1 overflow-y-auto text-[8px] font-mono text-cyan-600 space-y-2">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Saluran WhatsApp Resmi AlwaysMunn</h3>
+                        <p class="text-sm text-zinc-400 mt-1 max-w-xl">Dapatkan info terupdate, diskon produk digital, rilis script terbaru, dan pembagian tips marketing gratis langsung ke handphone Anda.</p>
                     </div>
                 </div>
+                <a href="https://whatsapp.com/channel/0029VbCRUA7BVJl1zO1M4S1S" target="_blank" rel="noopener noreferrer" 
+                   class="w-full md:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/10 hover:bg-emerald-600 active:scale-95 transition-all duration-200">
+                    Gabung Saluran
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Products Grid Section -->
+        <section id="products-list" class="scroll-mt-24 mb-20">
+            <div class="mb-10 text-center md:text-left">
+                <h2 class="text-2xl font-extrabold text-white sm:text-3xl">Pilihan Layanan & Produk AlwaysMunn</h2>
+                <p class="text-sm text-zinc-400 mt-2">Gas Harg lagi promo keburu naik harga</p>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                 
-                <div class="glass-morphism p-5 rounded-lg">
-                    <h3 class="orbitron text-[10px] font-bold text-red-500 mb-3 uppercase">Total Breach</h3>
-                    <p class="text-2xl font-black text-white orbitron" id="breach-counter">1,249,012</p>
-                </div>
-            </aside>
-        </div>
-    </div>
+                <div class="glow-card flex flex-col justify-between rounded-2xl p-6" id="product-card-1">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="inline-flex items-center rounded-md bg-purple-500/10 px-2.5 py-1 text-xs font-semibold text-purple-400 border border-purple-500/20">VVIP SERVICE</span>
+                            <span class="text-zinc-500 text-xs"><i class="fa-solid fa-circle-check text-indigo-400 mr-1"></i> Terlaris</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">OPEN MARGA PUSH CH VVIP</h3>
+                        <p class="text-xs text-zinc-400 mt-1 leading-relaxed">Sistem penambahan member/pengikut real untuk saluran/grup WhatsApp dengan metode aman & instan.</p>
+                        
+                        <!-- Variasi Dropdown / Pilihan Paket -->
+                        <div class="my-5">
+                            <label class="block text-xs font-semibold text-zinc-400 mb-2 uppercase tracking-wider">Pilih Paket:</label>
+                            <div class="relative">
+                                <select id="prod-1-option" onchange="updateProductPrice(1)" class="w-full appearance-none rounded-xl bg-brand-dark border border-white/10 px-4 py-3 text-sm font-medium text-white focus:outline-none focus:border-brand-primary cursor-pointer">
+                                    <option value="5000" data-label="3 ID (Rp5.000)" data-desc="Rp5.000 / 3 ID">Rp5.000 / 3 ID</option>
+                                    <option value="10000" data-label="5 ID (Rp10.000)" data-desc="Rp10.000 / 5 ID">Rp10.000 / 5 ID</option>
+                                    <option value="15000" data-label="7 ID + Admin Marga (Rp15.000)" data-desc="Rp15.000 / 7 ID + Admin Grub Marga Free">Rp15.000 / 7 ID + Admin Marga Free</option>
+                                    <option value="30000" data-label="12 ID + Open Marga (Rp30.000)" data-desc="Rp30.000 / 12 ID + Bisa Open Marga Sendiri">Rp30.000 / 12 ID + Bisa Open Marga</option>
+                                    <option value="40000" data-label="20 ID + Full Fitur (Rp40.000)" data-desc="Rp40.000 / 20 ID + Bisa Open Marga + PT Push Ch">Rp40.000 / 20 ID + Open Marga + PT</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
 
-    <!-- EXPLOIT MODAL -->
-    <div id="exploit-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm hidden">
-        <div class="glass-morphism w-full max-w-xl rounded-xl border-cyan-400/50 p-8 relative">
-            <div class="absolute top-0 left-0 w-full h-1 bg-cyan-500"></div>
-            <div class="flex justify-between items-center mb-8">
-                <div class="orbitron">
-                    <h2 class="text-2xl font-black text-cyan-400 tracking-tighter italic" id="modal-title">EXPLOIT CORE</h2>
-                    <p class="text-[9px] text-cyan-800 tracking-[0.5em]">ALIPZZY BYPASS SYSTEM</p>
+                        <!-- Price display -->
+                        <div class="mb-6">
+                            <span class="text-xs text-zinc-500">Harga Mulai Dari</span>
+                            <div class="flex items-baseline gap-1 mt-1">
+                                <span class="text-3xl font-extrabold text-white" id="prod-1-price-display">Rp5.000</span>
+                                <span class="text-xs text-zinc-400">/ paket</span>
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi Fitur -->
+                        <div class="space-y-3 pt-5 border-t border-white/5">
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Benefit Yang Didapat:</span>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-indigo-400 shrink-0 mt-0.5"></i>
+                                <span>Bisa stok channel/saluran WhatsApp</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-indigo-400 shrink-0 mt-0.5"></i>
+                                <span>Bisa jual channel lagi</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-indigo-400 shrink-0 mt-0.5"></i>
+                                <span>Bisa open marga sendiri (Mulai Paket 30k)</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-indigo-400 shrink-0 mt-0.5"></i>
+                                <span>Berpeluang cepat balik modal</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-indigo-400 shrink-0 mt-0.5"></i>
+                                <span>Channel Auto Rame Pengikut</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="initiatePurchase(1)" class="w-full mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/10 hover:from-indigo-500 hover:to-indigo-400 active:scale-95 transition-all duration-200">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Beli Layanan
+                    </button>
                 </div>
-                <button onclick="closeModal()" class="text-gray-600 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+
+                <!-- PRODUCT 2: OPEN OWNER & PT JS -->
+                <div class="glow-card flex flex-col justify-between rounded-2xl p-6" id="product-card-2">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="inline-flex items-center rounded-md bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-400 border border-emerald-500/20">JS</span>
+                            <span class="text-zinc-500 text-xs"><i class="fa-solid fa-rocket text-emerald-400 mr-1"></i> Fast On</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">OPEN OWNER & PT JS</h3>
+                        <p class="text-xs text-zinc-400 mt-1 leading-relaxed">Jasa penyiaran promosi (broadcast/share) ke ratusan saluran WhatsApp secara otomatis.</p>
+                        
+                        <!-- Variasi Dropdown / Pilihan Paket -->
+                        <div class="my-5">
+                            <label class="block text-xs font-semibold text-zinc-400 mb-2 uppercase tracking-wider">Pilih Paket:</label>
+                            <div class="relative">
+                                <select id="prod-2-option" onchange="updateProductPrice(2)" class="w-full appearance-none rounded-xl bg-brand-dark border border-white/10 px-4 py-3 text-sm font-medium text-white focus:outline-none focus:border-brand-primary cursor-pointer">
+                                    <option value="10000" data-label="Own Js (Rp10.000)" data-desc="Rp10.000 / Own Js">Rp10.000 / Own Js</option>
+                                    <option value="15000" data-label="Own Js Private (Rp15.000)" data-desc="Rp15.000 / Own Js Private">Rp15.000 / Own Js Private</option>
+                                    <option value="35000" data-label="PT Js (Rp35.000)" data-desc="Rp35.000 / PT Js">Rp35.000 / PT Js</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-zinc-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price display -->
+                        <div class="mb-6">
+                            <span class="text-xs text-zinc-500">Harga Mulai Dari</span>
+                            <div class="flex items-baseline gap-1 mt-1">
+                                <span class="text-3xl font-extrabold text-white" id="prod-2-price-display">Rp10.000</span>
+                                <span class="text-xs text-zinc-400">/ paket</span>
+                            </div>
+                        </div>
+
+                        <!-- Deskripsi Fitur -->
+                        <div class="space-y-3 pt-5 border-t border-white/5">
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Benefit Yang Didapat:</span>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-emerald-400 shrink-0 mt-0.5"></i>
+                                <span>Share ke 122+ Channel/Saluran WhatsApp</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-emerald-400 shrink-0 mt-0.5"></i>
+                                <span>Full Diurus & Dipantau Admin</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-emerald-400 shrink-0 mt-0.5"></i>
+                                <span>Anti Gimmick & Garansi Amanah</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-emerald-400 shrink-0 mt-0.5"></i>
+                                <span>Sistem Cepat Balik Modal (Balmod)</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-emerald-400 shrink-0 mt-0.5"></i>
+                                <span>Bot On 24 Jam NonStop Tanpa Jeda</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-emerald-400 shrink-0 mt-0.5"></i>
+                                <span>Dijamin Lebih Gacor & Efektif Promosi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="initiatePurchase(2)" class="w-full mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/10 hover:from-emerald-500 hover:to-emerald-400 active:scale-95 transition-all duration-200">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Beli Layanan
+                    </button>
+                </div>
+
+                <div class="glow-card flex flex-col justify-between rounded-2xl p-6" id="product-card-3">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="inline-flex items-center rounded-md bg-blue-500/10 px-2.5 py-1 text-xs font-semibold text-blue-400 border border-blue-500/20">RELEASE V1</span>
+                            <span class="text-zinc-500 text-xs"><i class="fa-solid fa-code text-blue-400 mr-1"></i> Premium Code</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">SCRIPT SHIN V1 RELEASE</h3>
+                        <p class="text-xs text-zinc-400 mt-1 leading-relaxed">Script Bot WhatsaApp Paling Gacor.</p>
+                        
+                        <div class="my-5">
+                            <div class="p-3.5 rounded-xl bg-brand-dark border border-white/5 text-sm text-zinc-400 font-medium">
+                                Edisi Tunggal / Full Lisensi
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <span class="text-xs text-zinc-500">Harga Flat</span>
+                            <div class="flex items-baseline gap-1 mt-1">
+                                <span class="text-3xl font-extrabold text-white">Rp15.000</span>
+                                <span class="text-xs text-zinc-400">/ script</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 pt-5 border-t border-white/5">
+                            <span class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Fitur-Fitur Gacor:</span>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-blue-400 shrink-0 mt-0.5"></i>
+                                <span>Main Menu, Store Menu & Download Menu</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-blue-400 shrink-0 mt-0.5"></i>
+                                <span>JpmCh Menu & Jpmch Tanpa AddidCh</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-blue-400 shrink-0 mt-0.5"></i>
+                                <span>Channel Menu & Pushkontak Menu</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-blue-400 shrink-0 mt-0.5"></i>
+                                <span>Panel V1 & V2 Menu, Settings Bot Menu</span>
+                            </div>
+                            <div class="flex items-start gap-2.5 text-sm text-zinc-300">
+                                <i class="fa-solid fa-circle-check text-blue-400 shrink-0 mt-0.5"></i>
+                                <span>Keamanan Terjamin Menggunakan Database</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="initiatePurchase(3)" class="w-full mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/10 hover:from-blue-500 hover:to-blue-400 active:scale-95 transition-all duration-200">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Beli Layanan
+                    </button>
+                </div>
+
             </div>
-            <div id="modal-content" class="space-y-6">
-                <div class="space-y-4">
-                    <label class="text-[9px] text-cyan-700 uppercase tracking-widest block">Target Identifier (ID/User/URL)</label>
-                    <input type="text" id="target-id" placeholder="MASUKKAN TARGET..." class="w-full bg-black border border-cyan-900 p-4 text-cyan-400 focus:outline-none focus:border-cyan-400 transition-all orbitron text-center text-xl">
-                </div>
-                <button onclick="startProcessing()" id="start-btn" class="w-full py-5 bg-cyan-900/20 border border-cyan-400 text-cyan-400 font-black uppercase tracking-[0.4em] hover:bg-cyan-400 hover:text-black transition-all">Execute Overlord Protocol</button>
-                <div id="modal-loading" class="hidden space-y-6 py-6 text-center">
-                    <div class="w-16 h-16 border-4 border-cyan-900 border-t-cyan-400 rounded-full animate-spin mx-auto"></div>
-                    <p class="orbitron text-[10px] text-cyan-400 animate-pulse" id="status-text">BYPASSING SECURE LAYER...</p>
-                    <div class="w-full bg-gray-900 h-1 rounded-full overflow-hidden">
-                        <div id="modal-progress" class="bg-cyan-500 h-full w-0 transition-all"></div>
-                    </div>
-                </div>
-                <div id="modal-result" class="hidden bg-green-950/10 border border-green-500/30 p-6 rounded animate-in zoom-in duration-300">
-                    <div class="flex items-center text-green-500 font-bold mb-4 text-xs">
-                        <i class="fa-solid fa-check-double mr-3"></i> DATA BERHASIL DITARIK BY ALIPZZY (SUCCESS)
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
-                        <div class="space-y-3">
-                            <div><p class="text-gray-600 text-[10px] uppercase">Username / Nick:</p><p class="text-white font-bold text-lg" id="res-user">---</p></div>
-                            <div><p class="text-gray-600 text-[10px] uppercase">Login Email/ID:</p><p class="text-green-400 font-bold" id="res-login">---</p></div>
+        </section>
+
+        <div id="checkout-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-brand-dark/95 backdrop-blur-md">
+            <div class="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-brand-card p-6 md:p-8 shadow-2xl shadow-indigo-500/5 max-h-[90vh] overflow-y-auto no-scrollbar">
+                
+                <button onclick="closeCheckoutModal()" class="absolute right-4 top-4 text-zinc-400 hover:text-white transition-colors duration-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+
+                <div id="step-summary">
+                    <h2 class="text-xl font-bold text-white mb-1"><i class="fa-solid fa-file-invoice text-indigo-400 mr-2"></i>Struk Pembelian</h2>
+                    <p class="text-xs text-zinc-400 mb-6">Konfirmasi detail pesanan Anda sebelum melakukan pembayaran.</p>
+
+                    <div class="rounded-xl border border-dashed border-white/10 bg-brand-dark p-5 mb-6">
+                        <div class="flex justify-between items-center pb-3 border-b border-white/5">
+                            <span class="text-xs font-mono text-zinc-500">ID PESANAN</span>
+                            <span class="text-xs font-mono font-bold text-white" id="receipt-id">AM-9382049</span>
                         </div>
-                        <div class="space-y-3">
-                            <div><p class="text-gray-600 text-[10px] uppercase">Password Target:</p><p class="text-red-500 font-bold text-lg tracking-wide bg-red-950/20 px-2" id="res-pw">---</p></div>
-                            <div><p class="text-gray-600 text-[10px] uppercase">Security Status:</p><p class="text-yellow-500 font-bold">2FA_BYPASSED_OK</p></div>
+                        <div class="space-y-3.5 py-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-zinc-400">Nama Produk</span>
+                                <span class="text-sm font-semibold text-white text-right max-w-[200px]" id="receipt-product-name">-</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-zinc-400">Variasi / Paket</span>
+                                <span class="text-sm font-semibold text-zinc-300 text-right max-w-[200px]" id="receipt-variation">-</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-2.5 border-t border-white/5">
+                                <span class="text-sm font-bold text-white">Total Tagihan</span>
+                                <span class="text-lg font-extrabold text-indigo-400" id="receipt-total-price">Rp0</span>
+                            </div>
                         </div>
                     </div>
-                    <button class="w-full mt-6 bg-green-600 text-black font-black py-3 uppercase text-[10px]" onclick="closeModal()">Selesai & Hapus Jejak</button>
+
+                    <h3 class="text-sm font-bold text-white mb-3">Pilih Metode Pembayaran</h3>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div onclick="selectPaymentMethod('qris')" id="pay-opt-qris" class="cursor-pointer flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-white/5 bg-brand-dark hover:border-indigo-500/50 transition-all duration-200">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400" id="icon-opt-qris">
+                                <i class="fa-solid fa-qrcode text-lg"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-white">QRIS</span>
+                            <span class="text-[10px] text-zinc-500">Scan & Bayar Instan</span>
+                        </div>
+                        
+                        <div onclick="selectPaymentMethod('ewallet')" id="pay-opt-ewallet" class="cursor-pointer flex flex-col items-center justify-center gap-2 p-4 rounded-xl border border-white/5 bg-brand-dark hover:border-indigo-500/50 transition-all duration-200">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400" id="icon-opt-ewallet">
+                                <i class="fa-solid fa-wallet text-lg"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-white">E-Wallet</span>
+                            <span class="text-[10px] text-zinc-500">Transfer Manual</span>
+                        </div>
+                    </div>
+
+                    <button onclick="goToPaymentDetails()" id="btn-next-step" disabled class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-zinc-800 text-zinc-500 py-3.5 text-sm font-semibold cursor-not-allowed transition-all duration-200">
+                        Lanjutkan Ke Pembayaran
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
                 </div>
+
+                <div id="step-pay-details" class="hidden">
+                    <button onclick="backToSummary()" class="flex items-center gap-2 text-xs font-bold text-zinc-400 hover:text-white mb-6 transition-colors duration-200">
+                        <i class="fa-solid fa-chevron-left text-[10px]"></i> Kembali ke Struk
+                    </button>
+
+                    <div id="panel-qris" class="hidden text-center">
+                        <h2 class="text-lg font-bold text-white mb-1">Scan QRIS Pembayaran</h2>
+                        <p class="text-xs text-zinc-400 mb-6">Silakan simpan atau scan gambar QRIS di bawah ini melalui aplikasi pembayaran favorit Anda.</p>
+                        
+                        <div class="relative mx-auto max-w-[240px] aspect-square rounded-2xl bg-white p-3 shadow-lg shadow-black/30 border border-white/10 mb-6 flex items-center justify-center overflow-hidden">
+                            <img src="https://files.catbox.moe/l70qxi.jpg" alt="QRIS AlwaysMunn" class="w-full h-full object-contain rounded-xl" onerror="this.src='https://placehold.co/240x240/ffffff/000000?text=QRIS+ERROR'">
+                        </div>
+                        <a href="https://files.catbox.moe/l70qxi.jpg" target="_blank" download class="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-semibold mb-6">
+                            <i class="fa-solid fa-download"></i> Unduh Gambar QRIS
+                        </a>
+                    </div>
+
+                    <div id="panel-ewallet" class="hidden">
+                        <h2 class="text-lg font-bold text-white mb-1">Transfer E-Wallet</h2>
+                        <p class="text-xs text-zinc-400 mb-6">Silakan lakukan transfer secara manual ke nomor e-wallet yang tertera di bawah.</p>
+                        
+                        <div class="rounded-xl bg-brand-dark border border-white/5 p-4 mb-6">
+                            <span class="text-[10px] text-zinc-500 font-semibold uppercase tracking-wider block mb-1">Nomor Rekening / E-Wallet</span>
+                            <div class="flex items-center justify-between">
+                                <span class="text-base font-extrabold text-white tracking-wider" id="wallet-number">085876670135</span>
+                                <button onclick="copyWalletNumber()" class="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white transition-all duration-200" title="Salin nomor">
+                                    <i class="fa-solid fa-copy text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-white/5 mb-8">
+                        <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Unggah Bukti Transfer (SS):</label>
+                        <div class="relative flex flex-col items-center justify-center border border-dashed border-white/15 hover:border-indigo-500/40 rounded-xl p-4 bg-brand-dark/40 cursor-pointer transition-colors duration-200" id="dropzone">
+                            <input type="file" id="proof-upload" accept="image/*" onchange="handleFileSelect(event)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                            
+                            <div id="upload-placeholder" class="text-center py-2">
+                                <i class="fa-solid fa-cloud-arrow-up text-2xl text-zinc-500 mb-2"></i>
+                                <p class="text-xs text-zinc-300 font-semibold">Klik untuk pilih gambar bukti</p>
+                                <p class="text-[10px] text-zinc-500 mt-1">Format PNG, JPG, JPEG (Max 5MB)</p>
+                            </div>
+                            
+                            <div id="upload-preview" class="hidden flex items-center gap-3 w-full">
+                                <div class="w-12 h-12 rounded-lg overflow-hidden bg-zinc-800 border border-white/10 flex items-center justify-center shrink-0">
+                                    <img id="preview-img" src="#" alt="Preview" class="w-full h-full object-cover">
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <p class="text-xs font-semibold text-white truncate" id="file-name">filename.jpg</p>
+                                    <p class="text-[10px] text-emerald-400 flex items-center gap-1 mt-0.5"><i class="fa-solid fa-circle-check"></i> Siap Dikirim</p>
+                                </div>
+                                <button onclick="resetFileSelection(event)" class="h-8 w-8 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 flex items-center justify-center z-20">
+                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="submitTransfer()" id="btn-final-transfer" class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 py-4 text-sm font-extrabold text-white shadow-xl shadow-emerald-500/10 hover:from-emerald-500 hover:to-emerald-400 active:scale-95 transition-all duration-200">
+                        <i class="fa-brands fa-whatsapp text-base"></i>
+                        Sudah Transfer, Hubungi WA Admin
+                    </button>
+                </div>
+
             </div>
         </div>
-    </div>
+
+        <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 max-w-sm pointer-events-none"></div>
+
+    </main>
+
+    <footer class="border-t border-white/5 bg-brand-card/30 py-12">
+        <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+            <p class="text-sm text-zinc-500">© 2026 AlwaysMunnStore. Creator t.me/AlipzzyOfficiaL</p>
+            <p class="text-xs text-zinc-600 mt-2">Dibuat dengan dedikasi penuh untuk memberikan kenyamanan bertransaksi digital secara aman & cepat.</p>
+        </div>
+    </footer>
 
     <script>
-        // --- MATRIX BACKGROUND LOGIC ---
-        const canvas = document.getElementById('matrix-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@&%*+=-/<>'.split('');
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#0f0';
-            ctx.font = fontSize + 'px monospace';
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters[Math.floor(Math.random() * characters.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
+        const products = {
+            1: {
+                id: 1,
+                name: "OPEN MARGA PUSH CH VVIP",
+                hasOptions: true,
+                selectedOption: null,
+                selectedPrice: 5000
+            },
+            2: {
+                id: 2,
+                name: "OPEN OWNER & PT JS",
+                hasOptions: true,
+                selectedOption: null,
+                selectedPrice: 10000
+            },
+            3: {
+                id: 3,
+                name: "SCRIPT SHIN V1 RELEASE",
+                hasOptions: false,
+                selectedOption: "Full Release V1",
+                selectedPrice: 15000
             }
-        }
-
-        // --- LOADING LOGS SEQUENCE ---
-        const logs = [
-            "Initializing Dark Web Proxy...",
-            "Connecting to Tor Network Nodes...",
-            "Requesting root access to mainframes...",
-            "Bypassing Firebase Security Rules...",
-            "Injecting payload into SQL database...",
-            "Scanning for unsecured ports...",
-            "Cracking 256-bit AES encryption...",
-            "Accessing user credential caches...",
-            "Downloading victim session cookies...",
-            "Overriding Admin authorization...",
-            "Decrypting salt-hashes...",
-            "Success: System fully compromised.",
-            "Launching ALIPZZY OVERLORD DASHBOARD..."
-        ];
-
-        let logIdx = 0;
-        function addTerminalLog() {
-            if (logIdx < logs.length) {
-                const div = document.createElement('div');
-                div.className = "flex space-x-2";
-                div.innerHTML = `<span class="text-white font-bold">[root@ALIPZZY:~]#</span> <span class="typing-text">${logs[logIdx]}</span>`;
-                const term = document.getElementById('terminal-content');
-                term.appendChild(div);
-                term.scrollTop = term.scrollHeight;
-                logIdx++;
-                setTimeout(addTerminalLog, Math.random() * 800 + 300);
-            }
-        }
-
-        // --- 10 SECONDS TIMER ---
-        let progress = 0;
-        const loadInterval = setInterval(() => {
-            progress += 1;
-            document.getElementById('main-progress').style.width = progress + "%";
-            document.getElementById('load-percent').innerText = Math.floor(progress) + "%";
-            
-            if (progress >= 100) {
-                clearInterval(loadInterval);
-                document.getElementById('hacker-loader').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                document.body.style.overflow = 'auto';
-            }
-        }, 100); // 100ms * 100 steps = 10,000ms (10 seconds)
-
-        // Matrix Start
-        const matrixInterval = setInterval(drawMatrix, 50);
-        addTerminalLog();
-
-        // --- APP LOGIC (RESTORED) ---
-        const userPool = ["Rexzz4You", "SkyLimit_Tzy", "KenzzOFFICIAL", "VanzzGanteng", "Yanzz_Aesthetic", "XD Valz", "RyuSateBoy", "who danz?"];
-        const loginNames = ["akunopm300k", "bocil_ep_ep", "sultan_muda", "player_legend", "akun_tumbal"];
-        const passPool = ["sayangmama97324", "gantengbanget", "anjing123", "bismillah_mitik", "semogawin123"];
-
-        const toolCategories = {
-            FF: ["Diamond Injector 99K", "Elite Pass Unlocker", "Auto Headshot Script", "V-Badge Injector", "Account Puller FF"],
-            ML: ["Diamond Generator V11", "All Skin Unlocker", "Map Hack Radar VIP", "Auto Win Streak", "Moonton Account Breaker"],
-            SOCIAL: ["Instagram PW Finder", "Facebook ID Cracker", "TikTok Follower Hack", "WhatsApp Remote Chat"],
-            DDOS: ["X-Killer DDOS", "Site Downloader Pro", "Botnet Controller"],
-            VIP: ["Credit Card Gen", "Netflix Premium Free", "Robux Injector Pro", "PUBG UC Hack"]
         };
 
-        const allTools = [];
-        Object.keys(toolCategories).forEach(cat => toolCategories[cat].forEach(name => allTools.push({ name, cat })));
+        let checkoutState = {
+            productId: null,
+            variationLabel: "",
+            price: 0,
+            paymentMethod: null,
+            hasFile: false,
+            fileName: ""
+        };
 
-        function renderTools(filter = "") {
-            const container = document.getElementById('tools-container');
-            container.innerHTML = "";
-            const filtered = allTools.filter(t => t.name.toLowerCase().includes(filter.toLowerCase()) || t.cat.toLowerCase().includes(filter.toLowerCase()));
-            filtered.forEach(tool => {
-                const card = document.createElement('div');
-                card.className = "tool-card glass-morphism p-4 rounded-lg flex flex-col justify-between";
-                card.onclick = () => openExploit(tool);
-                card.innerHTML = `
-                    <div class="flex justify-between mb-2"><i class="fa-solid fa-bolt text-cyan-500"></i><span class="text-[8px] bg-black px-2 py-0.5 rounded border border-gray-800">${tool.cat}</span></div>
-                    <h3 class="text-[10px] font-bold text-white uppercase">${tool.name}</h3>
-                    <div class="mt-4 flex items-center justify-between text-[8px]"><span class="text-green-500 font-bold">READY</span><i class="fa-solid fa-chevron-right text-gray-700"></i></div>
-                `;
-                container.appendChild(card);
-            });
+        window.onload = function() {
+            updateProductPrice(1);
+            updateProductPrice(2);
+        };
+
+        function formatRupiah(value) {
+            return "Rp" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
-        function openExploit(tool) {
-            document.getElementById('exploit-modal').classList.remove('hidden');
-            document.getElementById('modal-title').innerText = tool.name;
-            document.getElementById('modal-loading').classList.add('hidden');
-            document.getElementById('modal-result').classList.add('hidden');
-            document.getElementById('start-btn').classList.remove('hidden');
+        function updateProductPrice(prodId) {
+            const selectEl = document.getElementById(`prod-${prodId}-option`);
+            if (!selectEl) return;
+            
+            const selectedVal = parseInt(selectEl.value);
+            const selectedOption = selectEl.options[selectEl.selectedIndex];
+            
+            products[prodId].selectedPrice = selectedVal;
+            products[prodId].selectedOption = selectedOption.getAttribute('data-label');
+            
+            const priceDisplay = document.getElementById(`prod-${prodId}-price-display`);
+            if (priceDisplay) {
+                priceDisplay.innerText = formatRupiah(selectedVal);
+            }
         }
 
-        function closeModal() { document.getElementById('exploit-modal').classList.add('hidden'); }
+        function initiatePurchase(prodId) {
+            const product = products[prodId];
+            checkoutState.productId = prodId;
 
-        function startProcessing() {
-            if(!document.getElementById('target-id').value) return;
-            document.getElementById('start-btn').classList.add('hidden');
-            document.getElementById('modal-loading').classList.remove('hidden');
-            let prog = 0;
-            const iv = setInterval(() => {
-                prog += Math.random() * 8;
-                document.getElementById('modal-progress').style.width = prog + "%";
-                if(prog >= 100) { clearInterval(iv); showFinalResult(); }
-            }, 100);
+            if (product.hasOptions) {
+                const selectEl = document.getElementById(`prod-${prodId}-option`);
+                const selectedOption = selectEl.options[selectEl.selectedIndex];
+                checkoutState.variationLabel = selectedOption.getAttribute('data-label');
+                checkoutState.price = parseInt(selectEl.value);
+            } else {
+                checkoutState.variationLabel = product.selectedOption;
+                checkoutState.price = product.selectedPrice;
+            }
+
+            document.getElementById('receipt-id').innerText = "AM-" + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('receipt-product-name').innerText = product.name;
+            document.getElementById('receipt-variation').innerText = checkoutState.variationLabel;
+            document.getElementById('receipt-total-price').innerText = formatRupiah(checkoutState.price);
+
+            resetPaymentSelection();
+            resetFileSelection(null);
+
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            document.getElementById('step-summary').classList.remove('hidden');
+            document.getElementById('step-pay-details').classList.add('hidden');
         }
 
-        function showFinalResult() {
-            document.getElementById('modal-loading').classList.add('hidden');
-            document.getElementById('modal-result').classList.remove('hidden');
-            document.getElementById('res-user').innerText = userPool[Math.floor(Math.random() * userPool.length)];
-            document.getElementById('res-login').innerText = loginNames[Math.floor(Math.random() * loginNames.length)] + "@gmail.com";
-            document.getElementById('res-pw').innerText = passPool[Math.floor(Math.random() * passPool.length)];
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+            document.body.style.overflow = '';
         }
 
-        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
-        document.getElementById('tool-search').oninput = (e) => renderTools(e.target.value);
-        renderTools();
+        function selectPaymentMethod(method) {
+            checkoutState.paymentMethod = method;
+            
+            const payQris = document.getElementById('pay-opt-qris');
+            const payEwallet = document.getElementById('pay-opt-ewallet');
+            const nextBtn = document.getElementById('btn-next-step');
+
+            payQris.className = payQris.className.replace(' border-indigo-500/50 bg-indigo-500/5', ' border-white/5 bg-brand-dark');
+            payEwallet.className = payEwallet.className.replace(' border-indigo-500/50 bg-indigo-500/5', ' border-white/5 bg-brand-dark');
+
+            if (method === 'qris') {
+                payQris.className = payQris.className.replace(' border-white/5 bg-brand-dark', ' border-indigo-500/50 bg-indigo-500/5');
+            } else {
+                payEwallet.className = payEwallet.className.replace(' border-white/5 bg-brand-dark', ' border-indigo-500/50 bg-indigo-500/5');
+            }
+
+            nextBtn.disabled = false;
+            nextBtn.className = "w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-secondary to-brand-primary py-3.5 text-sm font-semibold text-white shadow-xl shadow-indigo-500/20 hover:opacity-90 active:scale-95 transition-all duration-200 cursor-pointer";
+        }
+
+        function resetPaymentSelection() {
+            checkoutState.paymentMethod = null;
+            const payQris = document.getElementById('pay-opt-qris');
+            const payEwallet = document.getElementById('pay-opt-ewallet');
+            const nextBtn = document.getElementById('btn-next-step');
+
+            payQris.className = payQris.className.replace(' border-indigo-500/50 bg-indigo-500/5', ' border-white/5 bg-brand-dark');
+            payEwallet.className = payEwallet.className.replace(' border-indigo-500/50 bg-indigo-500/5', ' border-white/5 bg-brand-dark');
+
+            nextBtn.disabled = true;
+            nextBtn.className = "w-full inline-flex items-center justify-center gap-2 rounded-xl bg-zinc-800 text-zinc-500 py-3.5 text-sm font-semibold cursor-not-allowed transition-all duration-200";
+        }
+
+        function goToPaymentDetails() {
+            document.getElementById('step-summary').classList.add('hidden');
+            document.getElementById('step-pay-details').classList.remove('hidden');
+
+            const panelQris = document.getElementById('panel-qris');
+            const panelEwallet = document.getElementById('panel-ewallet');
+
+            if (checkoutState.paymentMethod === 'qris') {
+                panelQris.classList.remove('hidden');
+                panelEwallet.classList.add('hidden');
+            } else {
+                panelQris.classList.add('hidden');
+                panelEwallet.classList.remove('hidden');
+            }
+        }
+
+        function backToSummary() {
+            document.getElementById('step-pay-details').classList.add('hidden');
+            document.getElementById('step-summary').classList.remove('hidden');
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                checkoutState.hasFile = true;
+                checkoutState.fileName = file.name;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('upload-placeholder').classList.add('hidden');
+                    document.getElementById('upload-preview').classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+                showToast("success", "Gambar bukti transfer siap digunakan!");
+            }
+        }
+
+        function resetFileSelection(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            document.getElementById('proof-upload').value = "";
+            checkoutState.hasFile = false;
+            checkoutState.fileName = "";
+
+            document.getElementById('upload-placeholder').classList.remove('hidden');
+            document.getElementById('upload-preview').classList.add('hidden');
+            document.getElementById('preview-img').src = "#";
+        }
+
+        function copyWalletNumber() {
+            const textToCopy = document.getElementById('wallet-number').innerText;
+            
+            const tempInput = document.createElement("input");
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            showToast("info", "Nomor e-wallet berhasil disalin!");
+        }
+
+        function showToast(type, message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const bgClass = type === 'success' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' :
+                            type === 'error' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                            'bg-indigo-500/10 border-indigo-500/20 text-indigo-400';
+
+            const icon = type === 'success' ? 'fa-circle-check' :
+                         type === 'error' ? 'fa-circle-exclamation' :
+                         'fa-circle-info';
+
+            toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3.5 rounded-xl border ${bgClass} shadow-lg transition-all duration-300 transform translate-y-5 opacity-0`;
+            toast.innerHTML = `
+                <i class="fa-solid ${icon}"></i>
+                <span class="text-xs font-semibold">${message}</span>
+            `;
+
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-5', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        function submitTransfer() {
+            if (!checkoutState.hasFile) {
+                showToast("error", "Harap unggah screenshot bukti transfer terlebih dahulu!");
+                return;
+            }
+
+            const activeProd = products[checkoutState.productId];
+            const receiptId = document.getElementById('receipt-id').innerText;
+            const paymentType = checkoutState.paymentMethod === 'qris' ? 'QRIS' : 'E-Wallet Transfer';
+            
+            const textPayload = `Halo Admin AlwaysMunnProduk, saya ingin melakukan konfirmasi pembayaran:\n\n` +
+                                `🛍️ *Detail Transaksi:*\n` +
+                                `• ID Pesanan: *${receiptId}*\n` +
+                                `• Produk: *${activeProd.name}*\n` +
+                                `• Paket/Varian: *${checkoutState.variationLabel}*\n` +
+                                `• Total Tagihan: *${formatRupiah(checkoutState.price)}*\n` +
+                                `• Metode Bayar: *${paymentType}*\n\n` +
+                                `*Bukti transfer sudah saya upload di form sistem.* Mohon segera diproses ya min! Terima kasih.`;
+
+            const encodedPayload = encodeURIComponent(textPayload);
+            const waTarget = `https://wa.me/6285876670135?text=${encodedPayload}`;
+            
+            showToast("success", "Menghubungkan ke WhatsApp...");
+            
+            setTimeout(() => {
+                window.open(waTarget, '_blank');
+                closeCheckoutModal();
+            }, 1000);
+        }
     </script>
 </body>
 </html>
